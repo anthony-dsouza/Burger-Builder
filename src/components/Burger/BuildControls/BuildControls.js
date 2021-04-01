@@ -6,7 +6,12 @@ import BuildControl from './BuildControl/BuildControl';
 
 const buildControls = (props) => {
     const ingredientControls = Object.keys(props.ingredients).map( (igKey, i) => {
-        return <BuildControl key={igKey + i} label={igKey} />;
+        return <BuildControl 
+                    key={igKey + i} 
+                    label={igKey}
+                    more={() => props.add(igKey)}
+                    less={() => props.remove(igKey)}
+                    />;
     });
     return (   
         <div className={classes.BuildControls}>
