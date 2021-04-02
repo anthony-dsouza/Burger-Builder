@@ -11,10 +11,14 @@ const buildControls = (props) => {
                     label={igKey}
                     more={() => props.add(igKey)}
                     less={() => props.remove(igKey)}
+                    disable={props.disable[igKey]}
                     />;
     });
     return (   
         <div className={classes.BuildControls}>
+            <div>
+                <h2>£{props.price.toFixed(2)}</h2>
+            </div>  
             {ingredientControls}
         </div>
     );
