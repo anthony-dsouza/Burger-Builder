@@ -16,10 +16,9 @@ const buildControls = (props) => {
     });
     return (   
         <div className={classes.BuildControls}>
-            <div>
-                <h2>£{props.price.toFixed(2)}</h2>
-            </div>  
+            <p>Current Price: <strong>£{props.price.toFixed(2)}</strong></p>
             {ingredientControls}
+            <button className={classes.OrderButton} disabled={props.order}>ORDER NOW</button>
         </div>
     );
 };
