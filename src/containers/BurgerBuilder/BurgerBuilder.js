@@ -78,6 +78,10 @@ class BurgerBuilder extends Component {
         this.setState({showSummary: false});
     };
 
+    continueHandler = () => {
+        alert('You have continued!');
+    }
+
 
 
     render() {
@@ -90,8 +94,12 @@ class BurgerBuilder extends Component {
 
         return (
             <Aux>
-                <Modal show={this.state.showSummary} clicked={this.hideSummaryHandler}>
-                    <OrderSummary ingredients={this.state.ingredients} />
+                <Modal show={this.state.showSummary} modalClosed={this.hideSummaryHandler}>
+                    <OrderSummary 
+                        ingredients={this.state.ingredients} 
+                        close={this.hideSummaryHandler} 
+                        continue={this.continueHandler}
+                    />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                     <BuildControls 
