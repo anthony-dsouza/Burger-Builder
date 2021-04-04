@@ -21,7 +21,8 @@ class BurgerBuilder extends Component {
             meat: 0
         },
         totalPrice: 3,
-        unpurchaseable: true
+        unpurchaseable: true,
+        showSummary: false
     }
 
     // we can pass an arguement containing the updated ingredients and this call the function.
@@ -69,7 +70,13 @@ class BurgerBuilder extends Component {
             );
     };
         
+    showSummaryHandler = () => {
+        this.setState({showSummary: true});
+    };
 
+    hideSummaryHandler = () => {
+        this.setState({showSummary: false});
+    };
 
 
 
@@ -83,8 +90,8 @@ class BurgerBuilder extends Component {
 
         return (
             <Aux>
-                <Modal>
-                    <OrderSummary ingredients={this.state.ingredients}/>
+                <Modal show={this.state.showSummary} clicked={this.hideSummaryHandler}>
+                    <OrderSummary ingredients={this.state.ingredients} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                     <BuildControls 
@@ -94,6 +101,7 @@ class BurgerBuilder extends Component {
                         remove={this.removeIngredientHandler}
                         disable={disabledInfo}
                         order={this.state.unpurchaseable}
+                        click={this.showSummaryHandler}
                         />
             </Aux>
         );

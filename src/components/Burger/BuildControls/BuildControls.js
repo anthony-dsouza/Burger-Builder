@@ -18,7 +18,7 @@ const buildControls = (props) => {
         <div className={classes.BuildControls}>
             <p>Current Price: <strong>£{props.price.toFixed(2)}</strong></p>
             {ingredientControls}
-            <button className={classes.OrderButton} disabled={props.order}>ORDER NOW</button>
+            <button className={classes.OrderButton} disabled={props.order} onClick={props.click}>ORDER NOW</button>
         </div>
     );
 };
