@@ -3,7 +3,6 @@ import Toolbar from '../Navigation/Toolbar/Toolbar';
 import Aux from '../../hoc/Auxiliary';
 import classes from './Layout.module.css';
 import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
-import { render } from '@testing-library/react';
 
 class Layout extends Component {
 
