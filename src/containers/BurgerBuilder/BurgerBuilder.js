@@ -4,6 +4,8 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import axios from '../../axios-orders';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const INGREDIENT_PRICES = {
     salad: 0.00,
@@ -22,7 +24,8 @@ class BurgerBuilder extends Component {
         },
         totalPrice: 3,
         unpurchaseable: true,
-        showSummary: false
+        showSummary: false,
+        loading: false
     }
 
     // we can pass an arguement containing the updated ingredients and this call the function.
@@ -79,7 +82,36 @@ class BurgerBuilder extends Component {
     };
 
     continueHandler = () => {
-        alert('You have continued!');
+        this.setState({loading: true})
+        const order = {
+            ingredients: this.state.ingredients,
+            price: this.state.ingredients.totalPrice,
+            customer: {
+                name: 'Anthony',
+                address: {
+                    street: 'teststreet 1',
+                    postcode: 't1 1te',
+                    country: 'UK'
+                },
+                email: 'test1@test.com'
+            },
+            deliveryMethod: 'fastest'
+        }
+        axios.post('/orders.json', order)
+            .then(response => {
+                console.log(response);
+                this.setState({
+                    loading: false,
+                    showSummary: false
+                })
+            })
+            .catch(error => {
+                this.setState({
+                    loading: false,
+                    showSummary: false
+                })
+                console.log(error);
+            });
     }
 
 
@@ -92,15 +124,20 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
 
+        let orderSummary = <OrderSummary 
+                                ingredients={this.state.ingredients} 
+                                close={this.hideSummaryHandler} 
+                                continue={this.continueHandler}
+                                price={this.state.totalPrice}
+                            />
+        if(this.state.loading) {
+            orderSummary = <Spinner />
+        }
+
         return (
             <Aux>
                 <Modal show={this.state.showSummary} modalClosed={this.hideSummaryHandler}>
-                    <OrderSummary 
-                        ingredients={this.state.ingredients} 
-                        close={this.hideSummaryHandler} 
-                        continue={this.continueHandler}
-                        price={this.state.totalPrice}
-                    />
+                    {orderSummary}
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                     <BuildControls 
